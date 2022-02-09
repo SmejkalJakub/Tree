@@ -4,20 +4,39 @@ export class Tree {
         this.root = null;
     }
 
-    insertValue(value){
+    insertValue(value, node = this.root){
         var node = new Node(value);
 
         if(this.root == null){
             this.root = node;
         }
         else{
-            
+            this.insertNode(this.root, node);
+        }   
+    }
+
+    insertNode(node, newNode){
+        if(this.eval_function(node.value, newNode.value)){
+            if(node.left === null){
+                node.left = newNode;
+            }
+            else{
+                this.insertNode(node.left, newNode);
+            }
+        }
+        else{
+            if(node.right === null){
+                node.right = newNode;
+            }
+            else{
+                this.insertNode(node.right, newNode);
+            }
         }
     }
 
     *preorder(node = this.root){
-        yield node.value;
         if(node !== null){
+            yield node.value;
             yield* this.preorder(node.left);
             yield* this.preorder(node.right);
         }
@@ -35,10 +54,9 @@ export class Tree {
         if(node !== null){
             yield* this.postorder(node.left);
             yield* this.postorder(node.right);
+            yield node.value;
         }   
-        yield node.value
     }
-    
 }
 
 class Node {
