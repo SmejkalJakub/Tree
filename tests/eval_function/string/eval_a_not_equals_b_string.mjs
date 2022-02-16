@@ -1,8 +1,8 @@
-import { Tree } from "../../tree.mjs";
+import { Tree } from "../../../tree.mjs";
 
-let input = [1,2,3,4,5,6];
+let input = ["krzMD", "iUjnw", "NPHcU", "nwSNo", "FRVYp", "YWKXu"];
 
-let t = new Tree((a,b) => a > b);
+let t = new Tree((a,b) => a !== b);
 
 input.forEach(i => t.insertValue(i));
 

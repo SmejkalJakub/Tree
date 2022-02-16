@@ -1,8 +1,8 @@
-import { Tree } from "../../tree.mjs";
+import { Tree } from "../../../tree.mjs";
 
-let input = [5,7,2131345646,9,4,13,12415486];
+let input = [31, 6, 11, 21, 18, 47];
 
-let t = new Tree((a,b) => a > b);
+let t = new Tree((a,b) => a !== b);
 
 input.forEach(i => t.insertValue(i));
 
