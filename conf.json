@@ -5,5 +5,9 @@
   },
   "opts": {
       "destination": "./docs"
+  },
+  "templates": {
+    "cleverLinks": false,
+    "monospaceLinks": false
   }
 }
