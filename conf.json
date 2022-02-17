@@ -1,22 +1,9 @@
 {
-    "plugins": [],
-    "recurseDepth": 10,
-    "opts": {
-      "recurse": true,
-      "destination": "./docs/"
-    },
-    "source": {
-      "include": ["."],
-      "includePattern": ".+\\.mjs(doc|x)?$",
-      "excludePattern": "node_modules"
-    },
-    "sourceType": "module",
-    "tags": {
-      "allowUnknownTags": true,
-      "dictionaries": ["jsdoc", "closure"]
-    },
-    "templates": {
-      "cleverLinks": false,
-      "monospaceLinks": false
-    }
+  "source": {
+      "includePattern": ".+\\.(m?js(doc|x)?)$",
+      "include": ["."]
+  },
+  "opts": {
+      "destination": "./docs"
   }
+}
