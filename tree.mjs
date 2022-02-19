@@ -26,41 +26,14 @@ export function Tree(evalFunction) {
      * @param {any} value - specified value that the new node should have
      */
     this.insertValue = function(value){
-        var node = new Node(value);
-
+        let newNode = new Node(value);
+        
         if(this.root === null){
-            this.root = node;
+            this.root = newNode
         }
         else{
-            this.insertNode(this.root, node);
+            this.root.insertNode(newNode, this.evalFunction);
         }   
-    }
-
-    /**
-     * Inserts new node to the tree. If the node should be inserted to the 
-     * left or right subtree is decided on evalFunction.
-     * If the selected child is empty, new node is inserted there. 
-     * Otherwise this function is recursively called on selected subtree.
-     * @param {Node} node - parent node on which the new node should be attached to
-     * @param {Node} newNode - new node that should be inserted
-     */
-    this.insertNode = function(node, newNode){
-        if(this.evalFunction(newNode.value, node.value)){
-            if(node.left === null){
-                node.left = newNode;
-            }
-            else{
-                this.insertNode(node.left, newNode);
-            }
-        }
-        else{
-            if(node.right === null){
-                node.right = newNode;
-            }
-            else{
-                this.insertNode(node.right, newNode);
-            }
-        }
     }
 
     /**
@@ -134,4 +107,31 @@ function Node(value) {
      * @type {Node}
      */
     this.right = null;
-  }
+
+    /**
+     * Inserts new node to the tree. If the node should be inserted to the 
+     * left or right subtree is decided on evalFunction.
+     * If the selected child is empty, new node is inserted there. 
+     * Otherwise this function is recursively called on selected subtree.
+     * @param {Node} node - parent node on which the new node should be attached to
+     * @param {Node} newNode - new node that should be inserted
+     */
+     this.insertNode = function(newNode, evalFunction) {
+        if(evalFunction(newNode.value, this.value)){
+            if(this.left === null){
+                this.left = newNode;
+            }
+            else{
+                this.left.insertNode(newNode, evalFunction);
+            }
+        }
+        else{
+            if(this.right === null){
+                this.right = newNode;
+            }
+            else{
+                this.right.insertNode(newNode, evalFunction);
+            }
+        }
+    }
+}
