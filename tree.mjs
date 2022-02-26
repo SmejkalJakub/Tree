@@ -113,8 +113,8 @@ function Node(value) {
      * left or right subtree is decided on evalFunction.
      * If the selected child is empty, new node is inserted there. 
      * Otherwise this function is recursively called on selected subtree.
-     * @param {Node} node - parent node on which the new node should be attached to
      * @param {Node} newNode - new node that should be inserted
+     * @param {Function} evalFunction - function that decides if new node should be inserted into left or right subtree
      */
      this.insertNode = function(newNode, evalFunction) {
         if(evalFunction(newNode.value, this.value)){
