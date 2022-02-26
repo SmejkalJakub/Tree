@@ -10,6 +10,9 @@ output_files=($output_files)
 
 declare -A tests_dict
 
+succ_tests=0
+fail_tests=0
+
 for script in "${script_files[@]}"
 do
     script_name=$(basename $script)
@@ -31,14 +34,18 @@ for key in "${!tests_dict[@]}"; do
     test_name=$(basename $key)
     test_name_without_extension=${test_name%.*} 
     echo "Doing test: $test_name_without_extension..."
-    diff -u --strip-trailing-cr -w -b ${tests_dict[$key]} <(node $key)
     DIFF=$(diff -u --strip-trailing-cr -w -b ${tests_dict[$key]} <(node $key))
 
     if [ "$DIFF" ] && [ $? == 0 ] 
     then
+        ((fail_tests=fail_tests+1))
         echo "Test failed"
     else
+        ((succ_tests=succ_tests+1))
         echo "Test successful"
     fi
 done
-echo "--------------------------------------------------------------"
+echo "=============================================================="
+echo "Successful tests: ${succ_tests}"
+echo "Failed tests: ${fail_tests}"
+echo "=============================================================="
