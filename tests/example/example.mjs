@@ -1,4 +1,8 @@
 /**
+ * Original example for the project
+ */
+
+/**
  * \brief Ukázkový skript pro první projekt předmětu WAP
  */
 

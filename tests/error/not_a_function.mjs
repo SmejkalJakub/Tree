@@ -1,3 +1,7 @@
+/**
+ * Test to check if there is an error when evaluation function is not a function
+ */
+
 import { Tree } from "../../tree.mjs";
 
 let input = [31, 6, 11, 21, 18, 47];

@@ -15,7 +15,7 @@ export function Tree(evalFunction) {
 
     /**
      * Root node of the created Tree
-     * @type {Node}
+     * @type {TreeNode}
      */
     this.root = null;
     
@@ -26,13 +26,13 @@ export function Tree(evalFunction) {
      * @param {any} value - specified value that the new node should have
      */
     this.insertValue = function(value){
-        let newNode = new Node(value);
+        let newNode = new TreeNode(value);
         
         if(this.root === null){
             this.root = newNode
         }
         else{
-            this.root.insertNode(newNode, this.evalFunction);
+            this.root.insertTreeNode(newNode, this.evalFunction);
         }   
     }
 
@@ -44,12 +44,28 @@ export function Tree(evalFunction) {
         return this.preorder.prototype.next(this.root);
     }
 
+    this.preorder.prototype.next = function* (node){
+        if(node !== null){
+            yield node.value;
+            yield* this.next(node.leftChild);
+            yield* this.next(node.rightChild);
+        }
+    }
+
     /**
      * Function that creates generator for traversing the tree in inorder manner
      * @returns {Generator} - Generator for traversing the tree in inorder manner
      */
     this.inorder = function(){
         return this.inorder.prototype.next(this.root);
+    }
+
+    this.inorder.prototype.next = function* (node){
+        if(node !== null){
+            yield* this.next(node.leftChild);
+            yield node.value;
+            yield* this.next(node.rightChild);
+        }
     }
 
     /**
@@ -60,27 +76,10 @@ export function Tree(evalFunction) {
         return this.postorder.prototype.next(this.root);
     }
 
-
-    this.preorder.prototype.next = function* (node = this.root){
+    this.postorder.prototype.next = function* (node){
         if(node !== null){
-            yield node.value;
-            yield* this.next(node.left);
-            yield* this.next(node.right);
-        }
-    }
-
-    this.inorder.prototype.next = function* (node = this.root){
-        if(node !== null){
-            yield* this.next(node.left);
-            yield node.value;
-            yield* this.next(node.right);
-        }
-    }
-
-    this.postorder.prototype.next = function* (node = this.root){
-        if(node !== null){
-            yield* this.next(node.left);
-            yield* this.next(node.right);
+            yield* this.next(node.leftChild);
+            yield* this.next(node.rightChild);
             yield node.value;
         }   
     }
@@ -89,9 +88,9 @@ export function Tree(evalFunction) {
 /**
  * Representation of the tree node
  * @constructor
- * @param {any} value - value that should be stored in the Node
+ * @param {any} value - value that should be stored in the TreeNode
  */
-function Node(value) {
+function TreeNode(value) {
     /**
      * Value of the specific node
      * @type {any}
@@ -99,38 +98,38 @@ function Node(value) {
     this.value = value;
     /**
      * Reference to the left child of the node
-     * @type {Node}
+     * @type {TreeNode}
      */
-    this.left = null;
+    this.leftChild = null;
     /**
      * Reference to the right child of the node
-     * @type {Node}
+     * @type {TreeNode}
      */
-    this.right = null;
+    this.rightChild = null;
 
     /**
      * Inserts new node to the tree. If the node should be inserted to the 
      * left or right subtree is decided on evalFunction.
      * If the selected child is empty, new node is inserted there. 
      * Otherwise this function is recursively called on selected subtree.
-     * @param {Node} newNode - new node that should be inserted
+     * @param {TreeNode} newNode - new node that should be inserted
      * @param {Function} evalFunction - function that decides if new node should be inserted into left or right subtree
      */
-     this.insertNode = function(newNode, evalFunction) {
+     this.insertTreeNode = function(newNode, evalFunction) {
         if(evalFunction(newNode.value, this.value)){
-            if(this.left === null){
-                this.left = newNode;
+            if(this.leftChild === null){
+                this.leftChild = newNode;
             }
             else{
-                this.left.insertNode(newNode, evalFunction);
+                this.leftChild.insertTreeNode(newNode, evalFunction);
             }
         }
         else{
-            if(this.right === null){
-                this.right = newNode;
+            if(this.rightChild === null){
+                this.rightChild = newNode;
             }
             else{
-                this.right.insertNode(newNode, evalFunction);
+                this.rightChild.insertTreeNode(newNode, evalFunction);
             }
         }
     }

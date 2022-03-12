@@ -1,3 +1,7 @@
+/**
+ * Test for multiple trees with different data types in parallel
+ */
+
 import { Tree } from "../../tree.mjs";
 
 let input = [31, 6, 11, 21, 18, 47];

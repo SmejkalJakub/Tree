@@ -1,3 +1,7 @@
+/**
+ * Test to test the implementation on integer values with greater than evaluation function
+ */
+
 import { Tree } from "../../../tree.mjs";
 
 let input = [31, 6, 11, 21, 18, 47];

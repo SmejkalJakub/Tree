@@ -1,23 +1,31 @@
 #!/bin/bash
 
+# Shell script to generate documentation for the project into the docs folder
+
+# Base directiry with all the tests
 directory="./tests"
 
-script_files=$(find $directory -type f -name "*.mjs")
-script_files=($script_files)
+# Get all the files 
+scripts=$(find $directory -type f -name "*.mjs")
+scripts=($scripts)
 
-output_files=$(find $directory -type f -name "*.txt")
-output_files=($output_files)
+# Get all the desired outputs
+outputs=$(find $directory -type f -name "*.txt")
+outputs=($outputs)
 
+# Declare the dictionary for th tests
 declare -A tests_dict
 
+# Number of successful and failed tests
 succ_tests=0
 fail_tests=0
 
-for script in "${script_files[@]}"
+# Get desired output for each test
+for script in "${scripts[@]}"
 do
     script_name=$(basename $script)
     name_without_extension=${script_name%.*}
-    for output in "${output_files[@]}"
+    for output in "${outputs[@]}"
     do
         output_name=$(basename $output)
         output_name_without_extension=${output_name%.*}
@@ -29,6 +37,7 @@ do
     done
 done
 
+# Run the tests
 for key in "${!tests_dict[@]}"; do
     echo "--------------------------------------------------------------"
     test_name=$(basename $key)
@@ -45,6 +54,8 @@ for key in "${!tests_dict[@]}"; do
         echo "Test successful"
     fi
 done
+
+# Simple result printout
 echo "=============================================================="
 echo "Successful tests: ${succ_tests}"
 echo "Failed tests: ${fail_tests}"

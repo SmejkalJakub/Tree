@@ -1,3 +1,7 @@
+/**
+ * Test to test the implementation on string values with not equals evaluation function
+ */
+
 import { Tree } from "../../../tree.mjs";
 
 let input = ["krzMD", "iUjnw", "NPHcU", "nwSNo", "FRVYp", "YWKXu"];
